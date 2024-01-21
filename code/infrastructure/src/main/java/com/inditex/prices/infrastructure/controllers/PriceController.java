@@ -2,10 +2,10 @@ package com.inditex.prices.infrastructure.controllers;
 
 import com.inditex.prices.api.PricesApi;
 import com.inditex.prices.domain.dtos.FinalPrice;
-import com.inditex.prices.domain.usecases.FindPriceUseCase;
 import com.inditex.prices.domain.records.ApplicationDate;
 import com.inditex.prices.domain.records.BrandId;
 import com.inditex.prices.domain.records.ProductId;
+import com.inditex.prices.domain.usecases.FindPriceUseCase;
 import com.inditex.prices.infrastructure.mappers.PriceInfraMapper;
 import com.inditex.prices.model.PriceResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +27,5 @@ public class PriceController implements PricesApi {
                 new ApplicationDate(applicationDate.toLocalDateTime()));
         return ResponseEntity.ok(mapper.toResponse(finalPrice));
     }
+
 }

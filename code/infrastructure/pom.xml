@@ -20,6 +20,11 @@
 
         <dependency>
             <groupId>com.inditex.prices</groupId>
+            <artifactId>domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inditex.prices</groupId>
             <artifactId>application</artifactId>
             <version>${project.version}</version>
         </dependency>

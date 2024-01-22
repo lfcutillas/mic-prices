@@ -1,0 +1,82 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Prices API
+  license:
+    name: MIT
+servers:
+  - url: http://petstore.swagger.io/v1
+paths:
+  /prices:
+    get:
+      summary: Find final price
+      operationId: findPrice
+      tags:
+        - prices
+      parameters:
+        - name: productId
+          in: query
+          description: product Id
+          required: true
+          schema:
+            type: integer
+            maximum: 5
+            format: int32
+        - name: brandId
+          in: query
+          description: brand Id
+          required: true
+          schema:
+            type: integer
+            maximum: 1
+            format: int32
+        - name: applicationDate
+          in: query
+          description: application date
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: A detailed price with rate to apply
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int32
+        brandId:
+          type: integer
+          format: int32
+        finalPrice:
+          type: number
+        rateToApply:
+          type: number
+        startDate:
+          type: string
+        endDate:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

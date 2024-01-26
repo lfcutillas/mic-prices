@@ -64,4 +64,3 @@ a structure intended for pagination even when you only need one result.
 
 Ultimately, choosing between these options depends on the specific situation and design preferences. 
 It is advisable to perform performance testing in a production-like environment to evaluate performance under real-world conditions.
-

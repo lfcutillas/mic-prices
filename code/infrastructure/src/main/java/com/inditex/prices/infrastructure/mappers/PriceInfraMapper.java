@@ -6,13 +6,11 @@ import com.inditex.prices.infrastructure.entities.PriceEntity;
 import com.inditex.prices.model.PriceResponse;
 import org.mapstruct.Mapper;
 
-import java.util.Collection;
-
 @Mapper(componentModel = "spring")
 public interface PriceInfraMapper {
 
     PriceResponse toResponse(FinalPrice finalPrice);
 
-    Collection<Price> toDomain(Collection<PriceEntity> finalPrice);
+    Price toDomain(PriceEntity entity);
 
 }

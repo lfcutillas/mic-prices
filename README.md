@@ -42,18 +42,25 @@ Takes time of research and configuration to make the following work:
 The integration test is in the boot module, since the main class (Application.class) is not discoverable from another module.
 May be there's a more elegant solution.
 
-### Sonarqube
-Export Jacoco reports for each module and connect it to Sonarqube
+### Code Coverage
+See the Jacoco reports for each module after compile in the target folder
 
-### Dockerized App
-The parent module will not generate a single jar, because the packaging needs to be specified as "pom". 
-See workarounds to make a simple Dockerfile with a single .jar
+### Solution criteria for query performance
+The implementation was analyzed in different ways: the use of a JPA findTop or findFirst query, 
+or a sub-query, or Pageable.
 
-An example of Dockerfile with single jar
-  ``` 
-  FROM openjdk:17-jdk-slim
-  COPY code/target/*.jar mic-prices.jar
-  ENV SERVER_PORT 8080
-  EXPOSE ${SERVER_PORT}
-  ENTRYPOINT ["java","-jar","/mic-prices.jar"]
-  ``` 
+And the winner is: Efficiency (sub-query). In the hypothetical case that the pricing table is large and the query is frequent, efficiency may be an important factor.
+
+Here are some of the considerations I took into account when deciding:
+
+- Using Pageable: Can make your code simpler and easier to understand, so you can reuse the same query and method with 
+different page sizes if you ever need to get more than one result, but can add a little overhead, since you are using 
+a structure intended for pagination even when you only need one result.
+- Using JPA: With all those parameters and conditions will end up with a very laaaaaargeMethodName, affecting readability and maintainability.
+- Using Sub-query: The MAX sub-query is specifically designed to find the maximum value, which could make the query more efficient if you only need one result.
+  - Less Overhead: There may be less overhead since you are focusing directly on finding the maximum without considering pagination. 
+  - Disadvantages: Less Flexible and Complexity of the query.
+- Sub-query workaround: Another alternative is to execute a single query order by priority and take only the first element of the returned list.
+
+Ultimately, choosing between these options depends on the specific situation and design preferences. 
+It is advisable to perform performance testing in a production-like environment to evaluate performance under real-world conditions.

@@ -49,7 +49,7 @@ See the Jacoco reports for each module after compile in the target folder
 The implementation was analyzed in different ways: the use of a JPA findTop or findFirst query, 
 or a sub-query, or Pageable.
 
-And the winner is: Efficiency (sub-query). In the hypothetical case that the pricing table is large and the query is frequent, efficiency may be an important factor.
+And the winner is: Efficiency + Flexibility + Legibility (JPQL query). In the hypothetical case that the pricing table is large and the query is frequent, efficiency may be an important factor.
 
 Here are some of the considerations I took into account when deciding:
 
@@ -60,7 +60,7 @@ a structure intended for pagination even when you only need one result.
 - Using Sub-query: The MAX sub-query is specifically designed to find the maximum value, which could make the query more efficient if you only need one result.
   - Less Overhead: There may be less overhead since you are focusing directly on finding the maximum without considering pagination. 
   - Disadvantages: Less Flexible and Complexity of the query.
-- Sub-query workaround: Another alternative is to execute a single query order by priority and take only the first element of the returned list.
+- JPQL query: Is the preferred solution, the goal is to execute a single query and add order by priority, then in java take only the first element of the returned list.
 
 Ultimately, choosing between these options depends on the specific situation and design preferences. 
 It is advisable to perform performance testing in a production-like environment to evaluate performance under real-world conditions.

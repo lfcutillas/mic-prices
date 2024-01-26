@@ -5,10 +5,8 @@ import com.inditex.prices.domain.records.ApplicationDate;
 import com.inditex.prices.domain.records.BrandId;
 import com.inditex.prices.domain.records.ProductId;
 
-import java.util.Collection;
-
 public interface PricePort {
 
-    Collection<Price> findBetweenDates(ProductId productId, BrandId brandId, ApplicationDate applicationDate);
+    Price findBetweenDates(ProductId productId, BrandId brandId, ApplicationDate applicationDate);
 
 }
